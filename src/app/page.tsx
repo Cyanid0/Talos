@@ -1,5 +1,6 @@
 "use client";
 import { Canvas } from "@react-three/fiber";
+import { useEffect, useState } from "react";
 import Navbar from "./component/topBar";
 import dynamic from "next/dynamic";
 import Footer from "./component/footer/index";
@@ -13,8 +14,16 @@ const ParticleText = dynamic(
 );
 
 const Home = () => {
+  const [showFooter,setShowFooter] = useState(false);
+
+  useEffect(() => {
+  setTimeout(() => {
+    setShowFooter(true);
+  }, 9000);
+    }
+  , []);
   return (
-    <div className="flex-shrink h-screen w-screen overflow-hidden">
+    <div className="flex flex-col h-screen items-center justify-center overflow-hidden">
       <link rel="icon" href="/Logo.png" sizes="any" />
       <Navbar />
       <Suspense
@@ -28,8 +37,7 @@ const Home = () => {
           <ParticleText text="Be Vigil" />
         </Canvas>
       </Suspense>
-
-      <Footer />
+      {showFooter && <Footer />}
     </div>
   );
 };

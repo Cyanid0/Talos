@@ -7,7 +7,7 @@ const footer = () => {
   ];
   return (
     <div className="absolute flex justify-center bottom-0 w-full h-1/4">
-      <TextScramble phrases={phrases} />
+      <TextScramble phrases={phrases} className="lg:text-5xl"/>
     </div>
   );
 };

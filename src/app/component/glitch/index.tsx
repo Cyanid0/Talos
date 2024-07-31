@@ -5,6 +5,7 @@ import styles from "./glitch.module.css";
 
 type TextScrambleProps = {
   phrases: string[];
+  className?: string;
 };
 
 type QueueItem = {
@@ -78,7 +79,7 @@ const useTextScramble = (
     let counter = 0;
     const next = () => {
       setText(phrases[counter]).then(() => {
-        setTimeout(next, 800);
+        setTimeout(next, 2000);
       });
       counter = (counter + 1) % phrases.length;
     };
@@ -89,11 +90,11 @@ const useTextScramble = (
   return elRef;
 };
 
-const TextScramble: React.FC<TextScrambleProps> = ({ phrases }) => {
+const TextScramble: React.FC<TextScrambleProps> = ({ phrases, className }) => {
   const elRef = useRef<HTMLDivElement>(null);
   useTextScramble(elRef, phrases);
 
-  return <div className={styles.text} ref={elRef}></div>;
+  return <div className={styles.text + " " + className} ref={elRef}></div>;
 };
 
 export default TextScramble;

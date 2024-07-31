@@ -49,6 +49,9 @@ const ParticleText: React.FC<ParticleTextProps> = ({ text }) => {
   const planeRef = useRef<THREE.Mesh>(null);
   const raycaster = useMemo(() => new THREE.Raycaster(), []);
   const mouse = useMemo(() => new THREE.Vector2(0, 0), []);
+  //take screen width 
+  const width = size.width;
+  //make text smaller for smaller screens
 
   const [particles, setParticles] = useState<THREE.Points | null>(null);
   const [disperse, setDisperse] = useState(false);
@@ -60,7 +63,7 @@ const ParticleText: React.FC<ParticleTextProps> = ({ text }) => {
       amount: 1500,
       particleSize: 1,
       particleColor: 0xffffff,
-      textSize: 16,
+      textSize: width > 1024 ? 16 : 7,
       area: 200,
       ease: 0.01,
     }),

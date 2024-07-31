@@ -1,6 +1,6 @@
 /* components/TextScramble.module.css */
 
-@import url('https://fonts.googleapis.com/css?family=Roboto+Mono:100');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Play:wght@400;700&family=Teko:wght@300..700&display=swap');
 
 .container {
   height: 100%;
@@ -11,9 +11,7 @@
 }
 
 .text {
-  font-family: 'Roboto Mono', monospace;
-  font-weight: 100;
-  font-size: 64px;
+  font-family: "Orbitron", sans-serif;
   color: #FAFAFA;
 }
 
