@@ -1,0 +1,22 @@
+/* components/TextScramble.module.css */
+
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono:100');
+
+.container {
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.text {
+  font-family: 'Roboto Mono', monospace;
+  font-weight: 100;
+  font-size: 64px;
+  color: #FAFAFA;
+}
+
+.dud {
+  color: #757575;
+}
