@@ -23,7 +23,7 @@ const useTextScramble = (
   const chars = "!<>-_\\/[]{}—=+*^?#________";
   const frameRef = useRef(0);
   const queueRef = useRef<QueueItem[]>([]);
-  const resolveRef = useRef<() => void | null>(null);
+  const resolveRef = useRef<() => void>(() => {});
   const frameRequestRef = useRef<number | null>(null);
 
   const randomChar = () => chars[Math.floor(Math.random() * chars.length)];
@@ -58,9 +58,9 @@ const useTextScramble = (
   const setText = (newText: string) => {
     const oldText = elRef.current ? elRef.current.innerText : "";
     const length = Math.max(oldText.length, newText.length);
-    const promise = new Promise<void>(
-      (resolve) => (resolveRef.current = resolve),
-    );
+    const promise = new Promise<void>((resolve) => {
+      resolveRef.current = resolve;
+    });
     queueRef.current = [];
     for (let i = 0; i < length; i++) {
       const from = oldText[i] || "";
@@ -91,7 +91,7 @@ const useTextScramble = (
 };
 
 const TextScramble: React.FC<TextScrambleProps> = ({ phrases, className }) => {
-  const elRef = useRef<HTMLDivElement>(null);
+  const elRef = useRef<HTMLDivElement | null>(null);
   useTextScramble(elRef, phrases);
 
   return <div className={styles.text + " " + className} ref={elRef}></div>;
