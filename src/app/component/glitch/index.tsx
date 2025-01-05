@@ -6,6 +6,7 @@ import styles from "./glitch.module.css";
 type TextScrambleProps = {
   phrases: string[];
   className?: string;
+  onlyOnce?: boolean; // New prop to control animation repetition
 };
 
 type QueueItem = {
@@ -19,12 +20,15 @@ type QueueItem = {
 const useTextScramble = (
   elRef: React.RefObject<HTMLDivElement>,
   phrases: string[],
+  onlyOnce: boolean = false // Default to false for continuous animation
 ) => {
   const chars = "!<>-_\\/[]{}—=+*^?#________";
   const frameRef = useRef(0);
   const queueRef = useRef<QueueItem[]>([]);
   const resolveRef = useRef<() => void>(() => {});
   const frameRequestRef = useRef<number | null>(null);
+  
+  const counterRef = useRef(0); // To track the current phrase index
 
   const randomChar = () => chars[Math.floor(Math.random() * chars.length)];
 
@@ -76,25 +80,38 @@ const useTextScramble = (
   };
 
   useEffect(() => {
-    let counter = 0;
+    let isCancelled = false;
     const next = () => {
-      setText(phrases[counter]).then(() => {
+      if (isCancelled) return;
+
+      if (counterRef.current < phrases.length) {
+        setText(phrases[counterRef.current]).then(() => {
+          counterRef.current += 1;
+          if (!onlyOnce) {
+            setTimeout(next, 2000); // Delay before next phrase
+          }
+        });
+      } else if (!onlyOnce) {
+        counterRef.current = 0; // Reset for looping
         setTimeout(next, 2000);
-      });
-      counter = (counter + 1) % phrases.length;
+      }
+      // If onlyOnce is true and all phrases are done, do not continue
     };
     next();
-    return () => cancelAnimationFrame(frameRequestRef.current ?? 0);
-  }, [phrases]);
+    return () => {
+      isCancelled = true;
+      cancelAnimationFrame(frameRequestRef.current ?? 0);
+    };
+  }, [phrases, onlyOnce]);
 
   return elRef;
 };
 
-const TextScramble: React.FC<TextScrambleProps> = ({ phrases, className }) => {
+const TextScramble: React.FC<TextScrambleProps> = ({ phrases, className, onlyOnce }) => {
   const elRef = useRef<HTMLDivElement | null>(null);
-  useTextScramble(elRef, phrases);
+  useTextScramble(elRef, phrases, onlyOnce);
 
-  return <div className={styles.text + " " + className} ref={elRef}></div>;
+  return <div className={`${styles.text} ${className}`} ref={elRef}></div>;
 };
 
 export default TextScramble;

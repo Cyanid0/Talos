@@ -5,6 +5,7 @@ import Navbar from "./component/topBar";
 import dynamic from "next/dynamic";
 import Footer from "./component/footer/index";
 import { Suspense } from "react";
+import Link from "next/link";
 
 const ParticleText = dynamic(
   () => import("./component/particleText/ParticalText"),
@@ -24,7 +25,6 @@ const Home = () => {
   , []);
   return (
     <div className="flex flex-col h-screen items-center justify-center overflow-hidden">
-      <link rel="icon" href="/Logo.png" sizes="any" />
       <Navbar />
       <Suspense
         fallback={
@@ -34,7 +34,7 @@ const Home = () => {
         }
       >
         <Canvas className="z-[-1]" camera={{ position: [0, 0, 100], fov: 65 }}>
-          <ParticleText text="Be Vigil" />
+          <ParticleText text="Keep Vigil" />
         </Canvas>
       </Suspense>
       {showFooter && <Footer />}
