@@ -114,18 +114,18 @@ const SecretPage: React.FC = () => {
         {failed ? (
           <TextScramble
             phrases={["Failed"]}
-            className="text-xl lg:text-5xl text-red-700"
+            className="text-xl lg:text-5xl text-red-900"
           />
         ) : flipped ? (
           <div className="flex flex-col items-center">
             <TextScramble
               phrases={["Neural Nexus Unveils Epoch"]}
               onlyOnce={true}
-              className="text-xl lg:text-5xl text-green-700"
+              className="text-2xl lg:text-5xl text-green-500"
             />
             <TextScramble
               phrases={["Keep Vigil", "#talos 4.0"]}
-              className="text-xl lg:text-5xl text-green-700"
+              className="text-2xl lg:text-5xl text-green-600"
             />
           </div>
         ) : (
